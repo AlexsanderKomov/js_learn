@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Простая страница</title>
+    <script defer src="script.js"></script>
+    <style>
+      .btn {
+        padding: 10px 25px;
+        background-color: aqua;
+        border-radius: 10px;
+        border: 1px solid aqua;
+        color: brown;
+        cursor: pointer;
+      }
+      .color-block {
+        width: 50vw;
+        height: 50vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container pt-4">
+      <button class="btn btn-primary">Кнопка</button>
+      <p class="count-display">1</p>
+      <button class="btn btn-primary increment-button">+1</button>
+
+      <input class="color-input" type="text" value="blue" />
+      <button class="btn clear-button">Очистить</button>
+      <div class="color-block"></div>
+    </div>
+  </body>
+</html>
