@@ -1,5 +1,6 @@
 (function () {
   let arrayItem = [];
+  let listName = '';
 
   // создаем и возвращаем заголовок приложения
   function createAppTitle(title) {
@@ -87,6 +88,7 @@
       for (let listItem of arrayItem) {
         if (listItem.id === obj.id) listItem.done = !listItem.done;
       }
+      saveList(arrayItem, listName);
     });
     deleteButton.addEventListener('click', function () {
       if (confirm('Вы уверены?')) {
@@ -95,6 +97,7 @@
         for (let i = 0; i < arrayItem.length; i++) {
           if (arrayItem[i].id === obj.id) arrayItem.splice(i, 1);
         }
+        saveList(arrayItem, listName);
       }
     });
 
@@ -119,7 +122,11 @@
     return max + 1;
   }
 
-  function createTodoApp(container, title = 'Список дел', array) {
+  function saveList(array, keyName) {
+    localStorage.setItem(keyName, JSON.stringify(array));
+  }
+
+  function createTodoApp(container, title = 'Список дел', keyName, array = []) {
     let todoAppTittle = createAppTitle(title);
     let todoItemForm = createTodoItemForm();
     let todoList = createTodoList();
@@ -128,25 +135,39 @@
     container.append(todoItemForm.form);
     container.append(todoList);
 
-    // let newItemState = {};
+    listName = keyName;
+    arrayItem = array;
 
-    function createItemState(array) {
-      let value = Object.values(array);
+    let localData = localStorage.getItem(listName);
 
-      for (let i = 0; i < value.length; i++) {
-        let newItemState = {
-          id: getNewId(arrayItem),
-          name: value[i][0],
-          done: value[i][1],
-        };
-        arrayItem.push(newItemState);
-      }
+    if (localData !== null && localData !== '')
+      arrayItem = JSON.parse(localData);
+
+    for (const itemList of arrayItem) {
+      let todoItem = createTodoItem(itemList);
+      todoList.append(todoItem.item);
     }
 
-    createItemState(array);
+    // function createItemState(array) {
+    //   let value = Object.values(array);
+
+    //   for (let i = 0; i < value.length; i++) {
+    //     let newItemState = {
+    //       id: getNewId(arrayItem),
+    //       name: value[i][0],
+    //       done: value[i][1],
+    //     };
+    //     if (arrayItem.length === array.length) {
+    //       arrayItem.push(newItemState);
+    //     }
+    //   }
+    // }
+    // createItemState(array);
 
     // добавляем переданные значения дела в список
-    arrayItem.map((n) => todoList.append(createTodoItem(n).item));
+    // if (arrayItem.length === 0) {
+    //   arrayItem.map((n) => todoList.append(createTodoItem(n).item));
+    // }
 
     // браузер создает событие submit на форме по надатию Enter или на кнопку создания дела
     todoItemForm.form.addEventListener('submit', function (e) {
@@ -170,6 +191,8 @@
 
       arrayItem.push(newItem);
 
+      saveList(arrayItem, listName);
+
       // создаем и добавляем в список новое дело с названием из поля для ввода
       todoList.append(todoItem.item);
 
@@ -180,12 +203,6 @@
       todoItemForm.button.disabled = true;
     });
   }
-
-  // document.addEventListener('DOMContentLoaded', function () {
-  //   createTodoApp(document.getElementById('my-todo'), 'Мои дела');
-  //   createTodoApp(document.getElementById('mom-todo'), 'Дела мамы');
-  //   createTodoApp(document.getElementById('dad-todo'), 'Дела папы');
-  // });
 
   window.createTodoApp = createTodoApp;
 })();
