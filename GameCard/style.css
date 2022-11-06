@@ -1,0 +1,84 @@
+/* body {
+  background-image: url(img/bg.jpeg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+} */
+
+.container {
+  margin: 0 auto;
+  padding: 30px 15px;
+  max-width: 1200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form__input {
+  padding: 2px 5px;
+  margin-right: 10px;
+  min-width: 436px;
+}
+
+.form__btn:disabled {
+  background: rgb(120, 120, 233);
+}
+.form__btn {
+  padding: 0;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+  color: black;
+  background-color: rgb(98, 98, 250);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+  width: 315px;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 199px;
+  border-radius: 20px;
+  font-size: 60px;
+  color: #fff;
+  background-color: #000;
+  background-image: url(img/cover.webp);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.8s ease-in-out, background 0.8s ease-in-out;
+  cursor: pointer;
+}
+
+.item-active {
+  transform: rotateY(360deg);
+  background: none;
+  background: rgb(238, 32, 32);
+  transition: transform 0.8s ease-in-out, background 0.8s ease-in-out;
+}
+
+.item__text {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.item__text-active {
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+}

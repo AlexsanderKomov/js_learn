@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script defer type="module" src="main.js"></script>
+  </head>
+  <body>
+    <section class="maim">
+      <div class="container" id="container">
+        <h1>Пары</h1>
+        <div class="game__value">
+          <div class="timer">
+            <div class="timer__second"></div>
+
+            <input
+              class="timer__input"
+              type="text"
+              placeholder="Введите количество секунд"
+            />
+            <button class="timer__button">Установить время</button>
+          </div>
+          <form class="form">
+            <input
+              class="form__input"
+              type="text"
+              placeholder="Введите количество карточек по горизонтали/вертикали"
+            />
+            <button class="form__button">Начать игру</button>
+          </form>
+        </div>
+        <div class="game" id="game"></div>
+        <button class="game__repeat">Сыграть еще</button>
+      </div>
+    </section>
+  </body>
+</html>
