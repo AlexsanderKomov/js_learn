@@ -33,6 +33,11 @@ body {
   margin: 0 auto;
 }
 
+.title {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
 .game__value {
   display: flex;
   flex-direction: column;
@@ -54,6 +59,7 @@ body {
 
 .timer__second {
   margin-right: 20px;
+  font-size: 35px;
 }
 
 .form__input {

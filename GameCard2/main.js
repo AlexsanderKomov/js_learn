@@ -14,7 +14,14 @@ let timerSeconds = document.querySelector('.timer__second');
 let timerbutton = document.querySelector('.timer__button');
 let interval;
 
-timerbutton.addEventListener('click', function () {
+// Переменные для логики игры
+let cardsNumberArray = [];
+let cardsArray = [];
+let firstCard = null;
+let secondCard = null;
+
+timerGame.addEventListener('submit', function (e) {
+  e.preventDefault();
   timerSeconds.textContent = timerValue.value;
   timerValue.value = '';
   timerValue.style.display = 'none';
@@ -39,7 +46,7 @@ form.addEventListener('submit', function (e) {
 
   // Устанавливаем секунды по умолчанию
   if (timerSeconds.textContent === '') {
-    timerSeconds.textContent = 30;
+    timerSeconds.textContent = 60;
     timerValue.style.display = 'none';
     timerbutton.style.display = 'none';
   }
@@ -48,8 +55,26 @@ form.addEventListener('submit', function (e) {
   if (timerSeconds.textContent > 0) {
     clearInterval(interval);
     interval = setInterval(timer, 1000);
-    console.log(123);
-    console.log(timerSeconds.textContent);
+  }
+
+  function timer() {
+    if (timerSeconds.textContent > 0) {
+      timerSeconds.textContent -= 1;
+    } else {
+      clearInterval(interval);
+      timerSeconds.textContent = `Время вышло`;
+      document.getElementById('game').style.marginBottom = '15px';
+      for (const card of document.querySelectorAll('.card')) {
+        card.classList.add('disabled');
+      }
+      setTimeout(() => {
+        alert('Время вышло');
+      }, 100);
+
+      document.getElementById('container').append(gameRepeat);
+
+      repeatGame('.card.disabled');
+    }
   }
 
   if (input.value % 2 === 0 && input.value <= 10) {
@@ -67,6 +92,22 @@ form.addEventListener('submit', function (e) {
     gameField.style.width = '75%';
   }
 
+  if (input.value ** 2 === 36) {
+    gameField.style.width = '100%';
+  }
+
+  if (input.value ** 2 === 64) {
+    document
+      .querySelectorAll('.card')
+      .forEach((n) => (n.style.width = '130px'));
+  }
+
+  if (input.value ** 2 === 100) {
+    document
+      .querySelectorAll('.card')
+      .forEach((n) => (n.style.width = '100px'));
+  }
+
   gameValue.style.marginBottom = '20px';
 
   input.value = '';
@@ -76,10 +117,6 @@ form.addEventListener('submit', function (e) {
 
 function newGame(container, cardsCount) {
   // Создать поле
-  let cardsNumberArray = [];
-  let cardsArray = [];
-  let firstCard = null;
-  let secondCard = null;
 
   for (let i = 1; i <= cardsCount / 2; i++) {
     cardsNumberArray.push(i);
@@ -132,43 +169,33 @@ function newGame(container, cardsCount) {
       // Останавливаем таймер когда игрок выиграл
       clearInterval(interval);
       container.style.marginBottom = '25px';
+
       document.getElementById('container').append(gameRepeat);
+
+      repeatGame('.card.success');
     }
-
-    gameRepeat.addEventListener('click', function () {
-      container.style.marginBottom = '0';
-
-      for (const card of document.querySelectorAll('.card.success')) {
-        card.remove();
-      }
-      gameField.remove();
-      timerSeconds.textContent = '';
-      timerValue.style.display = 'block';
-      timerbutton.style.display = 'block';
-      cardsNumberArray = [];
-      cardsArray = [];
-      firstCard = null;
-      secondCard = null;
-      document.getElementById('container').append(timerGame);
-      document.getElementById('container').append(form);
-      document.getElementById('container').append(gameField);
-      gameRepeat.remove();
-    });
   }
 }
 
-function timer() {
-  if (timerSeconds.textContent > 0) {
-    timerSeconds.textContent -= 1;
-  } else {
-    clearInterval(interval);
-    timerSeconds.textContent = `Время вышло`;
-    document.getElementById('game').style.marginBottom = '15px';
-    for (const card of document.querySelectorAll('.card')) {
-      card.classList.add('disabled');
-    }
-    alert('Время вышло');
+// Функционал кнопки "Сыграть еще"
+function repeatGame(classAdd) {
+  gameRepeat.addEventListener('click', function () {
+    container.style.marginBottom = '0';
 
-    document.getElementById('container').append(gameRepeat);
-  }
+    for (const card of document.querySelectorAll(classAdd)) {
+      card.remove();
+    }
+    gameField.remove();
+    timerSeconds.textContent = '';
+    timerValue.style.display = 'block';
+    timerbutton.style.display = 'block';
+    cardsNumberArray = [];
+    cardsArray = [];
+    firstCard = null;
+    secondCard = null;
+    document.getElementById('container').append(timerGame);
+    document.getElementById('container').append(form);
+    document.getElementById('container').append(gameField);
+    gameRepeat.remove();
+  });
 }
