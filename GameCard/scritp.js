@@ -6,7 +6,7 @@
 
   const form = document.querySelector('.form');
   const input = document.querySelector('.form__input');
-  let btn = document.querySelector('.form__btn');
+  const btn = document.querySelector('.form__btn');
   const gameList = document.querySelector('.list');
 
   input.addEventListener('input', function () {
@@ -63,10 +63,54 @@
     return arr;
   }
 
+  // создаем массив значений для ввода значения 6
+  function getArrayNumberValueSix() {
+    let arrayNumberValueSix = arrayNumber
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .slice(0, 36);
+
+    // Вариант посложнее
+    // const arrayNumberValueSix = arrayNumber
+    //   .join('')
+    //   .repeat(3)
+    //   .slice(0, 36)
+    //   .split('')
+    //   .map((n) => +n);
+
+    return arrayNumberValueSix;
+  }
+
+  // создаем массив значений для ввода значения 8
+  function getArrayNumberValueEight() {
+    let arrayNumberValueEight = arrayNumber
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .concat(arrayNumber);
+
+    return arrayNumberValueEight;
+  }
+
+  // создаем массив значений для ввода значения 10
+  function getArrayNumberValueTen() {
+    let arrayNumberValueTen = arrayNumber
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .concat(arrayNumber)
+      .slice(0, 100);
+
+    return arrayNumberValueTen;
+  }
+
   function createGameApp(container) {
     let gameItem = createGameField();
     const gameErrorValue = creareError();
     const gameRepeat = createGameRepeat();
+    const arrayNumberValueSix = getArrayNumberValueSix();
+    const arrayNumberValueEight = getArrayNumberValueEight();
+    const arrayNumberValueTen = getArrayNumberValueTen();
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -90,11 +134,6 @@
 
       // корректное заполнение значением карточек если ввели 6
       if (input.value % 2 === 0 && input.value == 6) {
-        let arrayNumberValueSix = arrayNumber
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .slice(0, 36);
-
         fyShuffle(arrayNumberValueSix, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueSix.length; i++) {
@@ -105,11 +144,6 @@
 
       // корректное заполнение значением карточек если ввели 8
       if (input.value % 2 === 0 && input.value == 8) {
-        let arrayNumberValueEight = arrayNumber
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .concat(arrayNumber);
-
         fyShuffle(arrayNumberValueEight, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueEight.length; i++) {
@@ -120,14 +154,6 @@
 
       // корректное заполнение значением карточек если ввели 10
       if (input.value % 2 === 0 && input.value == 10) {
-        let arrayNumberValueTen = arrayNumber
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .concat(arrayNumber)
-          .slice(0, 100);
-
         fyShuffle(arrayNumberValueTen, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueTen.length; i++) {
@@ -179,7 +205,6 @@
     //   }, 700);
     // }
 
-    console.log(activeNumder);
     // проверяем значения на совпадение и убираем класс или оставляем
     if (activeNumder.length == 2) {
       // countCardSuccess.push(activeNumder[0]);
