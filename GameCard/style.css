@@ -1,9 +1,17 @@
-/* body {
-  background-image: url(img/bg.jpeg);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-} */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: sans-serif;
+  font-weight: 400;
+}
 
 .container {
   margin: 0 auto;
@@ -15,27 +23,42 @@
   align-items: center;
 }
 
+.game__title {
+  margin-bottom: 15px;
+}
+
 .form {
   margin-bottom: 20px;
   text-align: center;
 }
 
 .form__input {
-  padding: 2px 5px;
+  padding: 4px 5px;
   margin-right: 10px;
-  min-width: 436px;
+  border: 2px solid rgb(70, 70, 219);
+  border-radius: 10px;
+  min-width: 362px;
+  text-align: center;
 }
 
 .form__btn:disabled {
-  background: rgb(120, 120, 233);
+  background: rgb(49, 49, 128);
+  pointer-events: none;
 }
 .form__btn {
   padding: 0;
   padding: 5px 15px;
-  border: none;
+  border: 1px solid rgb(70, 70, 219);
+  border-radius: 10px;
   cursor: pointer;
-  color: black;
-  background-color: rgb(98, 98, 250);
+  color: #fff;
+  font-weight: 700;
+  background-color: rgb(70, 70, 219);
+  transition: background-color 0.3s;
+}
+
+.form__btn:hover {
+  background-color: rgb(107, 107, 223);
 }
 
 .list {
@@ -56,29 +79,20 @@
   height: 199px;
   border-radius: 20px;
   font-size: 60px;
-  color: #fff;
+  color: transparent;
   background-color: #000;
   background-image: url(img/cover.webp);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  transition: transform 0.8s ease-in-out, background 0.8s ease-in-out;
+  transition: transform 0.2s, background 0.2s, color 0.2s;
   cursor: pointer;
 }
 
 .item-active {
   transform: rotateY(360deg);
   background: none;
-  background: rgb(238, 32, 32);
-  transition: transform 0.8s ease-in-out, background 0.8s ease-in-out;
-}
-
-.item__text {
-  opacity: 0;
-  transition: opacity 0.8s ease-in-out;
-}
-
-.item__text-active {
-  opacity: 1;
-  transition: opacity 0.8s ease-in-out;
+  background: rgb(151, 14, 117);
+  color: #fff;
+  transition: transform 0.2s, background 0.2s;
 }
