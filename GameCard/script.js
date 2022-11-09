@@ -37,18 +37,16 @@
   }
 
   // создаем и возвращаем поле для игры
-  function createGameField(number) {
+  function createGameField(obj) {
     let cardItem = document.createElement('li');
 
     cardItem.classList.add('item');
+    cardItem.textContent = obj.number;
 
-    cardItem.textContent = number;
-
-    // тут видит
     cardItem.addEventListener('click', function () {
       cardItem.classList.add('item-active');
+      obj.open = true;
       activeNumder.push(cardItem);
-      console.log(activeNumder);
     });
 
     return cardItem;
@@ -65,7 +63,7 @@
 
   // создаем массив значений для ввода значения 6
   function getArrayNumberValueSix() {
-    let arrayNumberValueSix = arrayNumber
+    const arrayNumberValueSix = arrayNumber
       .concat(arrayNumber)
       .concat(arrayNumber)
       .slice(0, 36);
@@ -83,7 +81,7 @@
 
   // создаем массив значений для ввода значения 8
   function getArrayNumberValueEight() {
-    let arrayNumberValueEight = arrayNumber
+    const arrayNumberValueEight = arrayNumber
       .concat(arrayNumber)
       .concat(arrayNumber)
       .concat(arrayNumber);
@@ -93,7 +91,7 @@
 
   // создаем массив значений для ввода значения 10
   function getArrayNumberValueTen() {
-    let arrayNumberValueTen = arrayNumber
+    const arrayNumberValueTen = arrayNumber
       .concat(arrayNumber)
       .concat(arrayNumber)
       .concat(arrayNumber)
@@ -105,7 +103,7 @@
   }
 
   function createGameApp(container) {
-    let gameItem = createGameField();
+    const gameItem = createGameField;
     const gameErrorValue = creareError();
     const gameRepeat = createGameRepeat();
     const arrayNumberValueSix = getArrayNumberValueSix();
@@ -116,19 +114,36 @@
       e.preventDefault();
 
       form.remove();
-
       // игнорируем создание элемента, если пользователь ничего не ввел в поле
       if (!input.value) {
         return;
       }
 
+      let newItem = {
+        number: null,
+        open: false,
+        success: false,
+      };
+
+      // корректное заполнение карточек при значении по умолчанию
+      if (input.value % 2 !== 0) {
+        fyShuffle(arrayNumber);
+
+        for (let i = 0; i < 16; i++) {
+          newItem.number = arrayNumber[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
+        }
+      }
+
       // корректное заполнение значением карточек если ввели 4
-      if (input.value > 10 || input.value <= 4) {
+      if (input.value > 10 || (input.value <= 4 && input.value % 2 === 0)) {
         fyShuffle(arrayNumber, input.value ** 2);
 
         for (let i = 0; i < input.value ** 2; i++) {
-          arrayItem.push(createGameField(arrayNumber[i]));
-          gameList.append(createGameField(arrayNumber[i]));
+          newItem.number = arrayNumber[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
         }
       }
 
@@ -137,8 +152,9 @@
         fyShuffle(arrayNumberValueSix, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueSix.length; i++) {
-          arrayItem.push(createGameField(arrayNumberValueSix[i]));
-          gameList.append(createGameField(arrayNumberValueSix[i]));
+          newItem.number = arrayNumberValueSix[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
         }
       }
 
@@ -147,8 +163,9 @@
         fyShuffle(arrayNumberValueEight, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueEight.length; i++) {
-          arrayItem.push(createGameField(arrayNumberValueEight[i]));
-          gameList.append(createGameField(arrayNumberValueEight[i]));
+          newItem.number = arrayNumberValueEight[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
         }
       }
 
@@ -157,8 +174,9 @@
         fyShuffle(arrayNumberValueTen, input.value ** 2);
 
         for (let i = 0; i < arrayNumberValueTen.length; i++) {
-          arrayItem.push(createGameField(arrayNumberValueTen[i]));
-          gameList.append(createGameField(arrayNumberValueTen[i]));
+          newItem.number = arrayNumberValueTen[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
         }
       }
 
@@ -190,11 +208,11 @@
       }
     });
 
-    // ТУТ не видит клика хотя передаю функцию, которая возвращает item
-    gameItem.addEventListener('click', () => {
-      console.log(345);
-    });
+    // Логика игры
 
+    // if (arrayItem.length > 0) {
+    //   true;
+    // }
     // if (arrayItem.length === countCardSuccess.length) {
     //   document.querySelector('.button-repeat').style.display = 'block';
     //   document.querySelector('.list').style.marginBottom = '20px';
@@ -206,22 +224,17 @@
     // }
 
     // проверяем значения на совпадение и убираем класс или оставляем
-    if (activeNumder.length == 2) {
-      // countCardSuccess.push(activeNumder[0]);
-      // countCardSuccess.push(activeNumder[1]);
-      console.log(activeNumder);
-      activeNumder = [];
-    }
-    if (
-      activeNumder.length == 2
-      // activeNumder[0].textContent !== activeNumder[1].textContent
-    ) {
-      setTimeout(() => {
-        activeNumder[0].classList.remove('item-active');
-        activeNumder[1].classList.remove('item-active');
-        activeNumder = [];
-      }, 200);
-    }
+
+    // if (
+    //   activeNumder.length == 2
+    //   // activeNumder[0].textContent !== activeNumder[1].textContent
+    // ) {
+    //   setTimeout(() => {
+    //     activeNumder[0].classList.remove('item-active');
+    //     activeNumder[1].classList.remove('item-active');
+    //     activeNumder = [];
+    //   }, 200);
+    // }
 
     // кнопка повтора
     // gameRepeat.addEventListener('click', () => {
