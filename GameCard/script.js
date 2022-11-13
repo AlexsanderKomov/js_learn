@@ -62,21 +62,10 @@
   }
 
   // создаем массив значений для ввода значения 6
-  function getArrayNumberValueSix() {
-    const arrayNumberValueSix = arrayNumber
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .slice(0, 36);
-
-    // Вариант посложнее
-    // const arrayNumberValueSix = arrayNumber
-    //   .join('')
-    //   .repeat(3)
-    //   .slice(0, 36)
-    //   .split('')
-    //   .map((n) => +n);
-
-    return arrayNumberValueSix;
+  function getArrayNumberValue(value) {
+    if (value % 2 === 0 && value == 6) {
+      return arrayNumber.concat(arrayNumber).concat(arrayNumber).slice(0, 36);
+    }
   }
 
   // создаем массив значений для ввода значения 8
@@ -149,10 +138,10 @@
 
       // корректное заполнение значением карточек если ввели 6
       if (input.value % 2 === 0 && input.value == 6) {
-        fyShuffle(arrayNumberValueSix, input.value ** 2);
+        fyShuffle(getArrayNumberValue(input.value), input.value ** 2);
 
-        for (let i = 0; i < arrayNumberValueSix.length; i++) {
-          newItem.number = arrayNumberValueSix[i];
+        for (let i = 0; i < getArrayNumberValue.length; i++) {
+          newItem.number = getArrayNumberValue[i];
           arrayItem.push(gameItem(newItem));
           gameList.append(gameItem(newItem));
         }

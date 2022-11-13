@@ -1,9 +1,11 @@
 (function () {
-  let arrayItem = [];
+  const arrayItem = [];
   const arrayNumber = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
   let activeNumder = [];
-  let countCardSuccess = [];
+  const countCardSuccess = [];
+  const arrayNumberValue = [];
 
+  const container = document.getElementById('game-app');
   const form = document.querySelector('.form');
   const input = document.querySelector('.form__input');
   const btn = document.querySelector('.form__btn');
@@ -45,6 +47,29 @@
 
     cardItem.addEventListener('click', function () {
       cardItem.classList.add('item-active');
+      activeNumder.push(cardItem);
+      console.log(activeNumder[0]);
+      console.log(activeNumder[1]);
+
+      // Логика игры
+      if (activeNumder.length == 2) {
+        if (activeNumder[0].textContent !== activeNumder[1].textContent) {
+          setTimeout(() => {
+            activeNumder[0].classList.remove('item-active');
+            activeNumder[1].classList.remove('item-active');
+            activeNumder = [];
+          }, 500);
+        }
+        if (activeNumder[0].textContent === activeNumder[1].textContent) {
+          setTimeout(() => {
+            activeNumder[0].classList.add('item-success');
+            activeNumder[1].classList.add('item-success');
+            countCardSuccess.push(activeNumder[0]);
+            countCardSuccess.push(activeNumder[1]);
+            activeNumder = [];
+          }, 500);
+        }
+      }
     });
 
     return cardItem;
@@ -56,57 +81,41 @@
       let randIndex = Math.floor(Math.random() * (i + 1));
       [arr[randIndex], arr[i]] = [arr[i], arr[randIndex]];
     }
+    console.log(arr);
     return arr;
   }
 
-  // создаем массив значений для ввода значения 6
-  function getArrayNumberValueSix() {
-    const arrayNumberValueSix = arrayNumber
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .slice(0, 36);
+  // создаем массив значений для ввода значения 6 или 8 или 10
+  function getArrayNumberValue(value) {
+    if (value % 2 === 0 && value == 6) {
+      arrayNumberValue = arrayNumber
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .slice(0, 36);
+    }
+    if (value % 2 === 0 && value == 8) {
+      arrayNumberValue = arrayNumber
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .concat(arrayNumber);
+    }
+    if (value % 2 === 0 && value == 10) {
+      arrayNumberValue = arrayNumber
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .concat(arrayNumber)
+        .slice(0, 100);
+    }
 
-    // Вариант посложнее
-    // const arrayNumberValueSix = arrayNumber
-    //   .join('')
-    //   .repeat(3)
-    //   .slice(0, 36)
-    //   .split('')
-    //   .map((n) => +n);
-
-    return arrayNumberValueSix;
-  }
-
-  // создаем массив значений для ввода значения 8
-  function getArrayNumberValueEight() {
-    const arrayNumberValueEight = arrayNumber
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .concat(arrayNumber);
-
-    return arrayNumberValueEight;
-  }
-
-  // создаем массив значений для ввода значения 10
-  function getArrayNumberValueTen() {
-    const arrayNumberValueTen = arrayNumber
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .concat(arrayNumber)
-      .slice(0, 100);
-
-    return arrayNumberValueTen;
+    return arrayNumberValue;
   }
 
   function createGameApp(container) {
     const gameItem = createGameField;
     const gameErrorValue = creareError();
     const gameRepeat = createGameRepeat();
-    const arrayNumberValueSix = getArrayNumberValueSix();
-    const arrayNumberValueEight = getArrayNumberValueEight();
-    const arrayNumberValueTen = getArrayNumberValueTen();
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -123,8 +132,44 @@
         success: false,
       };
 
+      if (input.value % 2 !== 0 || input.value > 10) {
+        fyShuffle(arrayNumber);
+
+        for (let i = 0; i < 16; i++) {
+          newItem.number = arrayNumber[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
+        }
+      }
+
+      // корректное заполнение значением карточек если ввели 4
+      if (input.value <= 4 && input.value % 2 === 0) {
+        fyShuffle(arrayNumber, input.value ** 2);
+
+        for (let i = 0; i < input.value ** 2; i++) {
+          newItem.number = arrayNumber[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
+        }
+      }
+
+      // корректное заполнение значением карточек если ввели 6, 8 ,10
+      if (input.value == 6 || input.value == 8 || input.value == 10) {
+        fyShuffle(getArrayNumberValue(input.value), input.value ** 2);
+
+        for (let i = 0; i < arrayNumberValue.length; i++) {
+          newItem.number = arrayNumberValue[i];
+          arrayItem.push(gameItem(newItem));
+          gameList.append(gameItem(newItem));
+        }
+      }
+
       // адаптация списка и карточек под стандартное кол-во
-      if (input.value ** 2 === 16 || input.value % 2 === 1) {
+      if (
+        input.value ** 2 === 16 ||
+        input.value % 2 === 1 ||
+        input.value > 10
+      ) {
         gameList.style.width = '645px';
       }
       // адаптация списка и карточек под 6 карточек в ряд
@@ -152,5 +197,5 @@
     });
   }
 
-  window.createGameApp = createGameApp;
+  createGameApp(container);
 })();
