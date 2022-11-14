@@ -27,12 +27,25 @@ body {
   margin-bottom: 15px;
 }
 
-.form {
+.game__settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form,
+.timer {
+  display: flex;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.form__input {
+.timer__second {
+  display: none;
+}
+
+.form__input,
+.timer__input {
   padding: 4px 5px;
   margin-right: 10px;
   border: 2px solid rgb(70, 70, 219);
@@ -41,11 +54,16 @@ body {
   text-align: center;
 }
 
+.timer__input {
+  min-width: 70px;
+}
+
 .form__btn:disabled {
   background: rgb(49, 49, 128);
   pointer-events: none;
 }
-.form__btn {
+.form__btn,
+.timer__btn {
   padding: 0;
   padding: 5px 15px;
   border: 1px solid rgb(70, 70, 219);
@@ -57,7 +75,8 @@ body {
   transition: background-color 0.3s;
 }
 
-.form__btn:hover {
+.form__btn:hover,
+.timer__btn:hover {
   background-color: rgb(107, 107, 223);
 }
 
@@ -103,4 +122,27 @@ body {
   background: rgb(73, 10, 57);
   color: #fff;
   pointer-events: none;
+}
+
+.item-disabled {
+  background: none;
+  background: rgb(27, 2, 21);
+  color: #fff;
+  pointer-events: none;
+}
+
+.button-repeat {
+  padding: 0;
+  padding: 5px 15px;
+  border: 1px solid rgb(70, 70, 219);
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  background-color: rgb(70, 70, 219);
+  transition: background-color 0.3s;
+}
+
+.button-repeat:hover {
+  background-color: rgb(107, 107, 223);
 }

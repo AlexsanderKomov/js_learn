@@ -1,15 +1,21 @@
 (function () {
   const arrayItem = [];
   const arrayNumber = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-  let activeNumder = [];
-  const countCardSuccess = [];
-  const arrayNumberValue = [];
+  const activeNumder = [];
+  const cardsWithMatchingNumbers = [];
+  let arrayNumberValue = []; // сделал через let, потому что в функции на 110 строке меняю массив
 
   const container = document.getElementById('game-app');
   const form = document.querySelector('.form');
   const input = document.querySelector('.form__input');
   const btn = document.querySelector('.form__btn');
   const gameList = document.querySelector('.list');
+
+  const timerGame = document.querySelector('.timer');
+  const timerValue = document.querySelector('.timer__input');
+  const timerSeconds = document.querySelector('.timer__seconds');
+  const timerbutton = document.querySelector('.timer__btn');
+  let interval;
 
   input.addEventListener('input', function () {
     if (!input.value) {
@@ -21,21 +27,27 @@
 
   function createGameRepeat() {
     const buttonRepeat = document.createElement('button');
-    buttonRepeat.classList.add('form-btn');
     buttonRepeat.textContent = 'Сыграть еще';
     buttonRepeat.className = 'button-repeat';
-    buttonRepeat.style.display = 'none';
+
+    buttonRepeat.addEventListener('click', () => {
+      gameList.style.marginBottom = '0';
+      input.value = '4';
+      timerValue.value = '60';
+      timerSeconds.style.display = 'none';
+      timerValue.style.display = 'block';
+      timerbutton.style.display = 'block';
+      arrayItem.splice(0, arrayItem.length);
+      activeNumder.splice(0, activeNumder.length);
+      cardsWithMatchingNumbers.splice(0, cardsWithMatchingNumbers.length);
+      form.style.display = 'block';
+      buttonRepeat.remove();
+      for (const card of document.querySelectorAll('.item')) {
+        card.remove();
+      }
+    });
 
     return buttonRepeat;
-  }
-
-  // создаем предупреждение если ввели другое число
-  function creareError() {
-    const error = document.createElement('h3');
-    error.innerHTML = 'Вы не попали в диапазон поэтому 4 в ряд по умолчанию';
-    error.style.display = 'none';
-
-    return error;
   }
 
   // создаем и возвращаем поле для игры
@@ -48,31 +60,41 @@
     cardItem.addEventListener('click', function () {
       cardItem.classList.add('item-active');
       activeNumder.push(cardItem);
-      console.log(activeNumder[0]);
-      console.log(activeNumder[1]);
 
       // Логика игры
-      if (activeNumder.length == 2) {
-        if (activeNumder[0].textContent !== activeNumder[1].textContent) {
-          setTimeout(() => {
-            activeNumder[0].classList.remove('item-active');
-            activeNumder[1].classList.remove('item-active');
-            activeNumder = [];
-          }, 500);
-        }
-        if (activeNumder[0].textContent === activeNumder[1].textContent) {
-          setTimeout(() => {
-            activeNumder[0].classList.add('item-success');
-            activeNumder[1].classList.add('item-success');
-            countCardSuccess.push(activeNumder[0]);
-            countCardSuccess.push(activeNumder[1]);
-            activeNumder = [];
-          }, 500);
-        }
-      }
+      gameLogic();
     });
 
     return cardItem;
+  }
+
+  // логика игры
+  function gameLogic() {
+    if (activeNumder.length === 3) {
+      if (activeNumder[0].textContent !== activeNumder[1].textContent) {
+        activeNumder[0].classList.remove('item-active');
+        activeNumder[1].classList.remove('item-active');
+        activeNumder.splice(0, 2);
+      }
+    }
+    if (activeNumder.length === 2) {
+      if (activeNumder[0].textContent === activeNumder[1].textContent) {
+        activeNumder[0].classList.add('item-success');
+        activeNumder[1].classList.add('item-success');
+        cardsWithMatchingNumbers.push(activeNumder[0]);
+        cardsWithMatchingNumbers.push(activeNumder[1]);
+        activeNumder.splice(0, 2);
+      }
+    }
+    if (arrayItem.length === cardsWithMatchingNumbers.length) {
+      gameList.style.marginBottom = '20px';
+      // Останавливаем таймер когда игрок выиграл
+      clearInterval(interval);
+      container.append(createGameRepeat());
+      setTimeout(() => {
+        alert('Вы побелиди');
+      }, 220);
+    }
   }
 
   // перемешиваем цифры
@@ -81,26 +103,26 @@
       let randIndex = Math.floor(Math.random() * (i + 1));
       [arr[randIndex], arr[i]] = [arr[i], arr[randIndex]];
     }
-    console.log(arr);
     return arr;
   }
 
   // создаем массив значений для ввода значения 6 или 8 или 10
   function getArrayNumberValue(value) {
-    if (value % 2 === 0 && value == 6) {
+    if (value === 6) {
       arrayNumberValue = arrayNumber
         .concat(arrayNumber)
         .concat(arrayNumber)
         .slice(0, 36);
     }
-    if (value % 2 === 0 && value == 8) {
+    if (value === 8) {
       arrayNumberValue = arrayNumber
         .concat(arrayNumber)
         .concat(arrayNumber)
         .concat(arrayNumber);
     }
-    if (value % 2 === 0 && value == 10) {
+    if (value === 10) {
       arrayNumberValue = arrayNumber
+        .concat(arrayNumber)
         .concat(arrayNumber)
         .concat(arrayNumber)
         .concat(arrayNumber)
@@ -112,15 +134,50 @@
     return arrayNumberValue;
   }
 
-  function createGameApp(container) {
+  // таймер
+  timerGame.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    timerSeconds.textContent = timerValue.value;
+    timerSeconds.style.display = 'block';
+    timerValue.style.display = 'none';
+    timerbutton.style.display = 'none';
+  });
+
+  function timer() {
+    if (timerSeconds.textContent > 0) {
+      timerSeconds.textContent -= 1;
+    } else {
+      clearInterval(interval);
+      timerSeconds.textContent = `Время вышло`;
+      gameList.style.marginBottom = '20px';
+      document
+        .querySelectorAll('.item')
+        .forEach((el) => el.classList.add('item-disabled'));
+      container.append(createGameRepeat());
+    }
+  }
+
+  function createGameApp() {
     const gameItem = createGameField;
-    const gameErrorValue = creareError();
-    const gameRepeat = createGameRepeat();
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      form.remove();
+      if (timerValue.value === '60') {
+        timerSeconds.textContent = '60';
+        timerSeconds.style.display = 'block';
+        timerValue.style.display = 'none';
+        timerbutton.style.display = 'none';
+      }
+
+      // Устонавливаем таймер
+      if (timerSeconds.textContent > 0) {
+        clearInterval(interval);
+        interval = setInterval(timer, 1000);
+      }
+
+      form.style.display = 'none';
       // игнорируем создание элемента, если пользователь ничего не ввел в поле
       if (!input.value) {
         return;
@@ -128,13 +185,10 @@
 
       let newItem = {
         number: null,
-        open: false,
-        success: false,
       };
 
       if (input.value % 2 !== 0 || input.value > 10) {
         fyShuffle(arrayNumber);
-
         for (let i = 0; i < 16; i++) {
           newItem.number = arrayNumber[i];
           arrayItem.push(gameItem(newItem));
@@ -154,8 +208,8 @@
       }
 
       // корректное заполнение значением карточек если ввели 6, 8 ,10
-      if (input.value == 6 || input.value == 8 || input.value == 10) {
-        fyShuffle(getArrayNumberValue(input.value), input.value ** 2);
+      if (+input.value === 6 || +input.value === 8 || +input.value === 10) {
+        fyShuffle(getArrayNumberValue(+input.value), input.value ** 2);
 
         for (let i = 0; i < arrayNumberValue.length; i++) {
           newItem.number = arrayNumberValue[i];
