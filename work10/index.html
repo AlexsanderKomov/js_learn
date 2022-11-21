@@ -4,8 +4,79 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
     <script defer src="script.js"></script>
     <title>Students</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container stud">
+      <h2 class="stud__title">Список студентов</h2>
+      <form action="" class="stud__form form-add">
+        <input
+          class="form-add__input form-add__input-full input"
+          type="text"
+          placeholder="ФИО"
+          required
+        />
+        <input
+          class="form-add__input input form-add__input-faculty"
+          type="text"
+          placeholder="Факультет"
+          required
+        />
+        <input
+          class="form-add__input form-add__input-hb input"
+          type="date"
+          placeholder="Год рождения"
+          min="1900-01-01"
+          value="1993-03-24"
+          required
+        />
+        <input
+          class="form-add__input form-add__input-start-education input"
+          type="date"
+          placeholder="Начало обучения"
+          min="2000-01-01"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Добавить студента</button>
+      </form>
+      <form action="" class="stud__filter filter">
+        <span>Фильтр:</span>
+        <input class="filter__input input" type="text" placeholder="ФИО" />
+        <input
+          class="filter__input input"
+          type="text"
+          placeholder="Факультет"
+        />
+        <input
+          class="filter__input input"
+          type="text"
+          placeholder="Год начала обучения"
+        />
+        <input
+          class="filter__input input"
+          type="text"
+          placeholder="Год окончания обучения"
+        />
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+      </form>
+      <table class="stud__table table">
+        <thead class="table__wrapper">
+          <th class="table__title">ФИО Студента</th>
+          <th class="table__title">Факльтет</th>
+          <th class="table__title">Дата рождения</th>
+          <th class="table__title">Годы обучения</th>
+        </thead>
+        <tbody class="table__list"></tbody>
+      </table>
+    </div>
+  </body>
 </html>
