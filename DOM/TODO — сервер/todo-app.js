@@ -71,9 +71,9 @@
 
     item.textContent = obj.name;
 
-    if (obj.done) {
-      item.classList.add('list-group-item-success');
-    }
+    // if (obj.done) {
+    //   item.classList.add('list-group-item-success');
+    // }
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
     doneButton.classList.add('btn', 'btn-success');
@@ -148,29 +148,8 @@
       todoList.append(todoItem.item);
     }
 
-    // function createItemState(array) {
-    //   let value = Object.values(array);
-
-    //   for (let i = 0; i < value.length; i++) {
-    //     let newItemState = {
-    //       id: getNewId(arrayItem),
-    //       name: value[i][0],
-    //       done: value[i][1],
-    //     };
-    //     if (arrayItem.length === array.length) {
-    //       arrayItem.push(newItemState);
-    //     }
-    //   }
-    // }
-    // createItemState(array);
-
-    // добавляем переданные значения дела в список
-    // if (arrayItem.length === 0) {
-    //   arrayItem.map((n) => todoList.append(createTodoItem(n).item));
-    // }
-
     // браузер создает событие submit на форме по надатию Enter или на кнопку создания дела
-    todoItemForm.form.addEventListener('submit', async function (e) {
+    todoItemForm.form.addEventListener('submit', function (e) {
       // эта строчка необходима, чтобы предотвратить стандартное действия браузера
       // в даном случае мы не хотим, чтобы страница перезагружалась при отправке формы
       e.preventDefault();
