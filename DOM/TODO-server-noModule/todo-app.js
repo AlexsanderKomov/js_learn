@@ -76,9 +76,6 @@
     });
     deleteButton.addEventListener('click', function () {
       onDelete({ todoItem, element: item });
-      // if (confirm('Вы уверены?')) {
-      //   item.remove();
-      // }
     });
 
     // вкладываем кнопки в отдельный элемент, чтобы они объединились в один блок

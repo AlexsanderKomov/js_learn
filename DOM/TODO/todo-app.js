@@ -124,6 +124,7 @@
 
   function saveList(array, keyName) {
     localStorage.setItem(keyName, JSON.stringify(array));
+    console.log(array);
   }
 
   function createTodoApp(container, title = 'Список дел', keyName, array = []) {

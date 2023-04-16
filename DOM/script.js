@@ -79,25 +79,25 @@ let btn = document.querySelector('.btn');
 btn.addEventListener('click', onClick);
 
 // let countDisplay = document.querySelector('.count-display');
-// let incrementBytton = document.querySelector('.increment-button');
+// let incrementButton = document.querySelector('.increment-button');
 
 // function incrementCount() {
 //   let currentCount = parseInt(countDisplay.textContent);
 //   countDisplay.textContent = currentCount + 1;
 // }
 
-// incrementBytton.addEventListener('click', incrementCount);
+// incrementButton.addEventListener('click', incrementCount);
 
 document.addEventListener('DOMContentLoaded', function () {
   let countDisplay = document.querySelector('.count-display');
-  let incrementBytton = document.querySelector('.increment-button');
+  let incrementButton = document.querySelector('.increment-button');
 
   function incrementCount() {
     let currentCount = parseInt(countDisplay.textContent);
     countDisplay.textContent = currentCount + 1;
   }
 
-  incrementBytton.addEventListener('click', incrementCount);
+  incrementButton.addEventListener('click', incrementCount);
 });
 
 document.addEventListener('DOMContentLoaded', function () {

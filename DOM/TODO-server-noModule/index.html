@@ -13,8 +13,8 @@
       crossorigin="anonymous"
     />
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        createTodoApp(document.getElementById('todo-app'), 'Дела мамы', 'mom');
+      document.addEventListener('DOMContentLoaded', () => {
+        createTodoApp(document.getElementById('todo-app'), 'Мои дела', 'Я');
       });
     </script>
   </head>
@@ -22,8 +22,8 @@
     <div class="container mb-5">
       <nav class="nav">
         <a href="index.html" class="nav-link">Мои дела</a>
-        <a href="dad.html" class="nav-link">Дела папы</a>
-        <a href="mom.html" class="nav-link">Дела мамы</a>
+        <a href="dad.html" class="nav-link">Дела папы</a
+        ><a href="mom.html" class="nav-link">Дела мамы</a>
       </nav>
     </div>
     <div class="container" id="todo-app"></div>

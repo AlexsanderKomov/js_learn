@@ -12,40 +12,34 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        let defArray = [
-          {
-            id: 1,
-            name: 'Купить молока',
-            done: false,
-          },
-          {
-            id: 2,
-            name: 'Купить хлеб',
-            done: false,
-          },
-          {
-            id: 3,
-            name: 'Отдать сдачу',
-            done: false,
-          },
-        ];
-        createTodoApp(
-          document.getElementById('todo-app'),
-          'Мои дела',
-          'my-list',
-          defArray
-        );
-      });
+    <script type="module">
+      import { createTodoApp } from './todo-app/view.js';
+      import {
+        getTodoList,
+        createTodoItem,
+        switchTodoItemDone,
+        deleteTodoItem,
+      } from './todo-app/api.js';
+      const owner = 'Мама';
+      async () => {
+        const todoItemList = await getTodoList(owner);
+        createTodoApp(document.getElementById('todo-app'), {
+          title: 'Дела мамы',
+          owner,
+          todoItemList,
+          onCreateFormSubmit: createTodoItem,
+          onDoneClick: switchTodoItemDone,
+          onDeleteClick: deleteTodoItem,
+        });
+      };
     </script>
   </head>
   <body>
     <div class="container mb-5">
       <nav class="nav">
         <a href="index.html" class="nav-link">Мои дела</a>
-        <a href="dad.html" class="nav-link">Дела папы</a>
-        <a href="mom.html" class="nav-link">Дела мамы</a>
+        <a href="dad.html" class="nav-link">Дела папы</a
+        ><a href="mom.html" class="nav-link">Дела мамы</a>
       </nav>
     </div>
     <div class="container" id="todo-app"></div>
