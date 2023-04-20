@@ -17,7 +17,6 @@ export async function createTodoItem({ owner, name }) {
       'Content-Type': 'application/json',
     },
   });
-
   return await response.json();
 }
 
