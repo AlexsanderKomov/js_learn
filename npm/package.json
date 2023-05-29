@@ -1,0 +1,12 @@
+{
+  "name": "npm",
+  "description": "Products catalog",
+  "private": true,
+  "scripts": {},
+  "author": "akomov",
+  "dependencies": {
+    "navigo": "^8.11.1",
+    "parcel": "^2.9.0",
+    "redom": "^3.29.1"
+  }
+}
