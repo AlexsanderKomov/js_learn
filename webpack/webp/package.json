@@ -1,0 +1,17 @@
+{
+  "name": "webp",
+  "description": "Products list",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Alexsander Komov",
+  "devDependencies": {
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
+  },
+  "dependencies": {
+    "navigo": "^8.11.1",
+    "redom": "^3.29.1"
+  }
+}

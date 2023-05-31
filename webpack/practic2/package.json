@@ -1,0 +1,19 @@
+{
+  "name": "practic2",
+  "description": "Practic_2",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Alexsander Komov",
+  "dependencies": {
+    "card-validator": "^8.1.1",
+    "email-validator": "^2.0.4",
+    "inputmask": "^5.0.8",
+    "redom": "^3.29.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.84.1",
+    "webpack-cli": "^5.1.1"
+  }
+}
