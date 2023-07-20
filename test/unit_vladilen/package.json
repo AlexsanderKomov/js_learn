@@ -1,0 +1,25 @@
+{
+  "name": "unit_vladilen",
+  "version": "1.0.0",
+  "description": "Jest intro",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "jest",
+    "unit",
+    "testing"
+  ],
+  "author": "Alexsandr Komov <sasha.komov.93@mail.ru>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.1"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}
